@@ -1,20 +1,43 @@
 # 🐾 Animal Care Clinic
 
-Veterinary clinic management web application built with ASP.NET Core MVC, Entity Framework Core, and ASP.NET Identity.
+Animal Care Clinic is a veterinary clinic management web application built with ASP.NET Core MVC, Entity Framework Core, and ASP.NET Identity.
 
-## Features
-- Authentication (Login / Register)
-- Role-based access (Admin / Staff)
-- CRUD: Animals, Owners, Veterinarians, Appointments
-- Appointment scheduling
-- SQL Server integration (EF Core)
+The system allows clinic staff to manage animals, owners, veterinarians, appointments, and medical records in an organized and secure way.
 
-## Tech Stack
-C#, ASP.NET Core MVC, EF Core, ASP.NET Identity, SQL Server, Razor Views, Bootstrap
+---
 
-## Local Setup
+## 🚀 Features
 
-1) Configure database – update `appsettings.json`:
+- User authentication (Login / Register)
+- Role-based authorization (Admin / Staff)
+- Full CRUD operations for:
+  - Animals (pets)
+  - Owners (clients)
+  - Veterinarians
+  - Appointments
+- Appointment scheduling and tracking
+- Secure password configuration
+- SQL Server database integration using Entity Framework Core
+
+---
+
+## 🛠 Technologies Used
+
+- C#
+- ASP.NET Core MVC
+- Entity Framework Core
+- ASP.NET Identity
+- SQL Server
+- Razor Views
+- Bootstrap
+
+---
+
+## ⚙️ Installation & Setup (Local)
+
+### 1) Configure the Database
+
+Open `appsettings.json` and update the connection string:
 
 ```json
 {
@@ -24,26 +47,50 @@ C#, ASP.NET Core MVC, EF Core, ASP.NET Identity, SQL Server, Razor Views, Bootst
 }
 ```
 
-2) Apply migrations:
+---
+
+### 2) Create / Update the Database
+
+Using **Package Manager Console** in Visual Studio:
 
 ```powershell
 Update-Database
 ```
 
-or
+Or using the .NET CLI:
 
 ```bash
 dotnet ef database update
 ```
 
-3) Run the application:
+This will automatically create the database and apply migrations.
+
+---
+
+### 3) Run the Application
+
+Run from Visual Studio (F5)  
+or use the CLI:
 
 ```bash
 dotnet run
-```
 
 
+---
 
-## Author
+## 📁 Project Architecture
+
+- Models → Application entities
+- Data → DbContext and migrations
+- Controllers → MVC controllers
+- Views → Razor UI pages
+- wwwroot → Static assets
+- appsettings.json → Configuration settings
+
+---
+
+## 👨‍💻 Author
+
 Akram Boughlala  
+
 
