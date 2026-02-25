@@ -1,0 +1,154 @@
+﻿@model AnimalCare.Models.EditVetScheduleViewModel
+
+@{
+    ViewData["Title"] = "Edit Schedule";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">
+        <i class="bi bi-pencil-square me-2 text-primary"></i> Edit Veterinarian Schedule
+    </h2>
+</div>
+
+<div class="alert alert-info shadow-sm mb-4">
+    <i class="bi bi-info-circle me-2"></i>
+    <strong>Edit Rules:</strong>
+    <ul class="mb-0 mt-2">
+        <li>Each veterinarian must work <strong>at least 3 days per week</strong></li>
+        <li>Working hours are fixed: <strong>8:00 AM to 4:00 PM</strong> (8 hours)</li>
+        <li>Check or uncheck days to add or remove them from the schedule</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form asp-action="EditAll" method="post">
+                    <input type="hidden" asp-for="VeterinarianId" />
+
+                    @* Store original days as hidden fields *@
+                    @for (int i = 0; i < Model.OriginalDays.Count; i++)
+                    {
+                        <input type="hidden" name="OriginalDays[@i]" value="@Model.OriginalDays[i]" />
+                    }
+
+
+                    <!-- Veterinarian Info (Read-only) -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-primary text-white">
+                            <i class="bi bi-person-badge"></i> Veterinarian (Cannot be changed)
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-secondary mb-0">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-person-fill"></i> @Model.VeterinarianName
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Working Days Selection -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-success text-white">
+                            <i class="bi bi-calendar-week"></i> Working Days (Select at least 3)
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-3">
+                                <i class="bi bi-clock"></i> All selected days will have working hours: <strong>8:00 AM - 4:00 PM</strong>
+                            </p>
+
+                            <div class="row g-3">
+                                @foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
+                                {
+                                    var isChecked = Model.SelectedDays.Contains((int)day);
+
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   name="SelectedDays"
+                                                   value="@((int)day)"
+                                                   id="day@((int)day)"
+                                                   @(isChecked ? "checked" : "")>
+                                            <label class="form-check-label" for="day@((int)day)">
+                                                <strong>@day</strong>
+                                                <span class="text-muted">(8:00 AM - 4:00 PM)</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <span asp-validation-for="SelectedDays" class="text-danger d-block mt-2"></span>
+
+                            <div class="alert alert-warning mt-3 mb-0">
+                                <i class="bi bi-exclamation-triangle"></i>
+                                <strong>Remember:</strong> You must select at least 3 days.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Update Schedule
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Helper Card -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <i class="bi bi-question-circle"></i> How It Works
+            </div>
+            <div class="card-body">
+                <h6 class="fw-bold">Editing Schedule:</h6>
+                <ol>
+                    <li class="mb-2">Check the days you want the veterinarian to work</li>
+                    <li class="mb-2">Uncheck days to remove them</li>
+                    <li class="mb-2">Make sure at least 3 days are checked</li>
+                    <li class="mb-0">Click "Update Schedule"</li>
+                </ol>
+
+                <hr>
+
+                <h6 class="fw-bold">What Happens:</h6>
+                <ul class="mb-0">
+                    <li class="mb-2"><strong>New days:</strong> Will be added to the schedule</li>
+                    <li class="mb-0"><strong>Unchecked days:</strong> Will be removed from the schedule</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Validate on submit
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const checkboxes = document.querySelectorAll('input[name="SelectedDays"]');
+
+            form.addEventListener('submit', function(e) {
+                const checkedCount = document.querySelectorAll('input[name="SelectedDays"]:checked').length;
+                if (checkedCount < 3) {
+                    e.preventDefault();
+                    alert('Please select at least 3 working days.');
+                    return false;
+                }
+            });
+        });
+    </script>
+}
