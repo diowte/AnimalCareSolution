@@ -42,8 +42,8 @@ dotnet ef database update
 dotnet run
 ```
 
-Open the URL shown in the console (ex: https://localhost:7056)
+
 
 ## Author
 Akram Boughlala  
-GitHub: https://github.com/diowte
+
