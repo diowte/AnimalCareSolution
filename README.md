@@ -67,30 +67,4 @@ This will automatically create the database and apply migrations.
 
 ---
 
-### 3) Run the Application
-
-Run from Visual Studio (F5)  
-or use the CLI:
-
-```bash
-dotnet run
-
-
----
-
-## 📁 Project Architecture
-
-- Models → Application entities
-- Data → DbContext and migrations
-- Controllers → MVC controllers
-- Views → Razor UI pages
-- wwwroot → Static assets
-- appsettings.json → Configuration settings
-
----
-
-## 👨‍💻 Author
-
-Akram Boughlala  
-
 
